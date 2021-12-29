@@ -1,13 +1,15 @@
-FROM golang@sha256:a92abf53d0ac8dd292b432525c15ce627554546ebc4164d1d4149256998122ce
+# docker.io/golang:1.17-alpine
+FROM golang@sha256:8474650232fca6807a8567151ee0a6bd2a54ea28cfc93f7824b42267ef4af693
 
-RUN apk add make
+RUN apk add make git
 
 ADD go.mod go.mod
 ADD go.sum go.sum
 
 ENV GOPATH=""
 ENV CGO_ENABLED=0
-RUN go mod download
+
+RUN go mod tidy -compat=1.17
 
 VOLUME work
 WORKDIR work
